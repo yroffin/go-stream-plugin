@@ -32,7 +32,7 @@ import (
 
 // Plugin instance
 type Plugin struct {
-	c chan interface{}
+	c chan string
 }
 
 // Instance instance
@@ -55,15 +55,11 @@ func GenUUID() (string, error) {
 	return hex.EncodeToString(uuid), nil
 }
 
-type complex struct {
-	hex string
-}
-
 func (p *Plugin) send() {
 	for {
 		time.Sleep(1 * time.Second)
 		g, _ := GenUUID()
-		p.c <- complex{hex: g}
+		p.c <- g
 	}
 }
 
@@ -71,11 +67,11 @@ func (p *Plugin) send() {
 func (p *Plugin) Start() {
 	log.Println("Start plugin")
 
-	p.c = make(chan interface{})
+	p.c = make(chan string)
 	go p.send()
 }
 
 // Chan access
-func (p *Plugin) Chan() chan interface{} {
+func (p *Plugin) Chan() chan string {
 	return p.c
 }

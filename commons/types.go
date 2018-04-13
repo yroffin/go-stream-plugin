@@ -24,5 +24,5 @@ package commons
 // IPlugin simple plugin
 type IPlugin interface {
 	Start()
-	Chan() chan string
+	Chan() chan interface{}
 }

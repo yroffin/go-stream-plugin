@@ -24,6 +24,7 @@ package main
 import (
 	"log"
 	"plugin"
+	"reflect"
 
 	"github.com/yroffin/go-stream-plugin/commons"
 )
@@ -50,8 +51,9 @@ func Lookup(plug string) (commons.IPlugin, error) {
 
 func receive(p commons.IPlugin) {
 	for {
+		log.Println("REC")
 		value := <-p.Chan()
-		log.Println("REC", value)
+		log.Println("REC", value, reflect.TypeOf(value))
 	}
 }
 
